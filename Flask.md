@@ -207,6 +207,41 @@ To use the installed script we need to insert the following line of code in our 
 from flask.ext.script import Manager
 manager = Manager(app)
 ```
+so the final code of **hello.py** looks like this after the extension of flask-script extension
+
+```python
+from flask import Flask
+from flask import request
+from flask import redirect
+from flask.ext.script import Manager
+
+app = Flask(__name__)
+manager = Manager(app)
+
+@app.route('/')
+def index():
+	user_agent = request.headers.get('User-Agent')
+	return "You are using %s browser" % user_agent
+
+@app.route('/user/<name>')
+def name(name):
+	return "You said your name is %s" % name
+
+@app.route('/google')
+def google():	
+	return redirect("http://google.com.np")
+
+if __name__ == '__main__':
+	manager.run()
+```
+
+so, with the flask-script extension, our **python hello.py** can provides the command line options
+```python
+$ python hello.py runserver
+$ python hello.py shell
+$ python hello.py --help
+$ python hello.py runserver --help
+```
 
 ##App methods and attributes
 from flask import Flask
