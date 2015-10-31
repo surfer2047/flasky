@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request
-from flask import make_response
+from flask import redirect
+from flask.ext.script import Manager
 
 app = Flask(__name__)
 
@@ -8,21 +9,17 @@ app = Flask(__name__)
 @app.route('/')
 def index():
 	user_agent = request.headers.get('User-Agent')
-	return '<h1>You are running %s browser</h1>' %user_agent
+	return "You are using %s browser" % user_agent
 
-
-
-@app.route('/name/<name>')
+@app.route('/user/<name>')
 def name(name):
-	return "I think your name is %s" %name
+	return "You said your name is %s" % name
 
-@app.route('/fuck')
-def fuck():
-	response = make_response('<h1>This document carries a cookie!</h1>')
-	response.set_cookie('answer', '42')
-	return response
-		
+@app.route('/google')
+def google():
+	return redirect("http://google.com.np")
 
+manager = Manager(app)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+	app.run(debug=True)

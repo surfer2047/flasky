@@ -172,14 +172,43 @@ def index():
 	return response
 ```
 
-we have also another special type of redirect called redirect 
+we have also another special type of response called redirect 
 ```python
 @app.route('/')
 def index():
 	return redirect('http://google.com')
 ```
+> Redirect wil be identified by the status code of 302 in http protocol.
 
-#App methods and attributes
+In flask for error handling there a another special type of response called **abort**
+```python
+from flask import abort
+@app.route(/user/<id>)
+def get_user(id):
+	user = load_user(id)
+	if not user:
+		abort(40r)
+	return "<h1>%s is not a valid user</h1>" %user.name
+```
+
+##Flask Extensions
+We can manage our flash application from the command line as well, to set up the configuration options to the 
+web server we need to pass the options to app.run() instance, as flask is extendable, so, we will **flask-script**
+to mange and set the configuration options to our aplication.
+
+To install flask-script run the following command
+```python
+$pip install flask-script
+```
+
+To use the installed script we need to insert the following line of code in our **hello.py** application
+
+```python
+from flask.ext.script import Manager
+manager = Manager(app)
+```
+
+##App methods and attributes
 from flask import Flask
 from flask import make_response
 from flask import redirect
