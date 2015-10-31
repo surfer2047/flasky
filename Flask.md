@@ -6,7 +6,7 @@ $ source bin activate
 (flasky)$ pip install flask
 ```
 
-#Basic Flask application Structure
+##Basic Flask application Structure
 
 All flask application needs to create a *application instance*,
 The web server pass all the request it get pass to this application object using a protocol called WSGI
@@ -21,7 +21,7 @@ The only required parameter to the Flask class is the name of the module or file
 called **__name__** in python.
 
 
-#Routes and View Functions
+##Routes and View Functions
 
 The association between the url and the functions in flask that handle the request is called the route, 
 Route mapping is done through the decoraters in python app.route
@@ -49,7 +49,7 @@ The dynamic components are string by defaults in url, but we can also specify th
 will be match if the id equals to the integer value, the flask url supports **int float path**
 
 
-#Starting up a Server
+##Starting up a Server
 ```python
 if __name__ == '__main__':
 	app.run(debug=True)
@@ -60,7 +60,7 @@ Once the server startup it goes into the loop and only stop after hitting the co
 Now we can run our app by invoking our python interpreter as,
 `python hello.py`
 
-#Application and request Context
+##Application and request Context
 
 Flask use the **Contexts** to make certain objects globally accessibles,
 Context enables flask to make access to the certain threads globally without intefering the other threads
@@ -138,21 +138,39 @@ The **HEAD OPTIONS** and **GET** are the request method that are handled by the 
 automatically managed by the route.
 
 
-#Request Hooks
+##Request Hooks
 Sometimes it is useful to execute the code before or after the each request is processed, and these code are implemented
 as a function and these functions are called hooks.
 
-- before_first_request
-	Register a function to run before the first request get handled
-- before_request
-	Register a function to run before each request
-- after_request
-	Register a function to run after each request if no unhandled exceptions occours
-- teardown_request
-	Register a function to run after a request even if unhandled exceptions occours
+- **before_first_request:**  Register a function to run before the first request get handled
+- **before_request:** Register a function to run before each request
+- **after_request** Register a function to run after each request if no unhandled exceptions occours
+- **teardown_request** Register a function to run after a request even if unhandled exceptions occours
 
+##Response
+When flask invokes a view function through the request object, it expects a response object. when flask response,
+by default it return the http response object wit status code, and the default status code will be the 200
+if the request get replied successfully as **200** numeric code.
 
+we can also override the behaviour by appending the numeric code in the return statement as follows in view methods.
 
+```python
+def index():
+	return "<h2>Bad request</h2>", 400
+```
+we can also append the dictionary on the response as a third argument.
+Instead of passing each value as a tuple in the return statement, It is benificial to use the response object provided
+by the flask calld `make_response`, 
+
+```python
+from flask import make_response
+
+@app.route('/')
+def index():
+	response = make_response("<h1>This document carries a cookie")
+	response.set_cookie('answer', 42)
+	return response
+```
 
 #App methods and attributes
 app.url_map 
