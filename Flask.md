@@ -1,7 +1,9 @@
+#Working with Flask
+
+```
 virtualenv flasky
 (flasky)$ pip install flask
-(flasky)$ python
-	>>> import flask
+```
 
 #Basic Flask application Structure
 
@@ -14,10 +16,12 @@ from flask import Flask
 app = Flask(__name__)
 ```
 
-The only required parameter to the Flask class is the name of the module or file which is given by the magic variable called __name__ in python.
+The only required parameter to the Flask class is the name of the module or file which is given by the magic variable  name 
+called **__name__** in python.
 
 
 #Routes and View Functions
+
 The association between the url and the functions in flask that handle the request is called the route, 
 Route mapping is done through the decoraters in python app.route
 
@@ -25,8 +29,10 @@ Route mapping is done through the decoraters in python app.route
 @app.route('/')
 def index():
 	return '<h1> Hello world </h1>'
+```
 
-**note** Decorators are the standard features of the python programming language, they can modify the behaviour of the functions.
+
+**note: ** Decorators are the standard features of the python programming language, they can modify the behaviour of the functions.
 Here the function like index() are called the **View** functions.
 
 we can also create the dynamic url mapping, for instance
@@ -34,7 +40,7 @@ we can also create the dynamic url mapping, for instance
 ```
 @app.route('/username/<name>')
 def username(name):
-	return "<h1> welcome to your Dashboard %s" % name
+	return "<h1> welcome to your Dashboard %s </h1>" % name
 ```
 
 The portion enclosed in the angle bracket is the dynamic part.
@@ -43,10 +49,15 @@ will be match if the id equals to the integer value, the flask url supports **in
 
 
 #Starting up a Server
-
+```
 if __name__ == '__main__':
 	app.run(debug=True)
+```
+
 Once the server startup it goes into the loop and only stop after hitting the control + C keystroke.
+
+Now we can run our app by invoking our python interpreter as,
+`python hello.py`
 
 #Application and request Context
 
