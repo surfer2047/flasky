@@ -18,8 +18,8 @@ def name(name):
 
 @app.route('/fuck')
 def fuck():
-	response = make_response("<h1> Bad request </h1>")
-	response.set_cookie('answer', 42)
+	response = make_response('<h1>This document carries a cookie!</h1>')
+	response.set_cookie('answer', '42')
 	return response
 		
 

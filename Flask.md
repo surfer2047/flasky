@@ -172,7 +172,23 @@ def index():
 	return response
 ```
 
+we have also another special type of redirect called redirect 
+```python
+@app.route('/')
+def index():
+	return redirect('http://google.com')
+```
+
 #App methods and attributes
+from flask import Flask
+from flask import make_response
+from flask import redirect
+
+response = make_response('<h1> Hello world </h1>')
+response.creae_cookie('answer', 42)
+
+from hello import app 
 app.url_map 
-app.app_context()
+context = app.app_context()
 app.add_url_rule() # Non decoraters version for url mapping in flask
+
