@@ -33,7 +33,7 @@ def index():
 ```
 
 
-> **note: ** Decorators are the standard features of the python programming language, they can modify the behaviour of the functions. Here the function like index() are called the **View** functions.
+> **note:** Decorators are the standard features of the python programming language, they can modify the behaviour of the functions. Here the function like index() are called the **View** functions.
 
 
 we can also create the dynamic url mapping, for instance
@@ -88,4 +88,73 @@ variable_name | Description
 request 	  | The request object which encapsulate the content carried by the http request
 session 	  |  It is the dictionary that is used to remember the users session
 
-			  
+Application context are only available when the flask application is running(pushes), at the time
+of flask application running, the variables **current_app** and **g** application context are available
+
+To demonstrate that the application context is only available in the app running, we can run the following commands
+
+```python
+(flasky)$ python
+>>> from hello import app 
+>>> from flask import current_app
+>>> current_app.name 
+RuntimeError: working outside of application context
+```
+To fix this error we need to run our application, so that we can have access to our application context, 
+we can push (activate) our app from command line as well.
+
+```python
+>>>from hello import app
+>>>from flask import current_app
+>>> app_context = app.app_context()
+>>>app_context.push()
+>>>current_app.name
+'hello'
+>>>app_context.pop()
+```
+The important things to remember is, we can get the our application context by running the app.app_context() method on the 
+application instance
+
+
+##Request Dispatching
+In the previous example we create our urls and its mapping to the methods using some decoraters and python functions.
+To see the maps we can use the url_map method on app
+
+```python
+>>> from hello import app 
+>>>app.url_map 
+```
+On running this above command, Flask display the following output in our console
+```python
+>>> app.url_map
+Map([<Rule '/' (HEAD, OPTIONS, GET) -> index>,
+ <Rule '/static/<filename>' (HEAD, OPTIONS, GET) -> static>,
+ <Rule '/user/<name>' (HEAD, OPTIONS, GET) -> name>])
+```
+The **/** and **/user/<name>** are defined in our hello.py file, but **/static/<filename>** is the 
+special route added by the flask to give access to the static route of our application.
+
+The **HEAD OPTIONS** and **GET** are the request method that are handled by the route, while HEAD and OPTIONS methods are
+automatically managed by the route.
+
+
+#Request Hooks
+Sometimes it is useful to execute the code before or after the each request is processed, and these code are implemented
+as a function and these functions are called hooks.
+
+- before_first_request
+	Register a function to run before the first request get handled
+- before_request
+	Register a function to run before each request
+- after_request
+	Register a function to run after each request if no unhandled exceptions occours
+- teardown_request
+	Register a function to run after a request even if unhandled exceptions occours
+
+
+
+
+#App methods and attributes
+app.url_map 
+app.app_context()
+app.add_url_rule() # Non decoraters version for url mapping in flask
